@@ -1,0 +1,49 @@
+--Data Query Language Sample
+
+Total quantity of products sold per category 
+
+SELECT  
+    categories.category_name, 
+    SUM(orderitems.quantity) AS total_quantity_sold 
+FROM  
+    orderitems  
+INNER JOIN  
+    products ON orderitems.product_id = products.product_id 
+INNER JOIN  
+    categories  ON products.category_id = categories.category_id 
+GROUP BY  
+    categories.category_name; 
+----------------------------------------------------
+Total revenue generated per product 
+SELECT  
+    products.name AS product_name, 
+    SUM(orderitems.quantity * orderitems.price_at_purchase) AS total_revenue 
+FROM  
+    orderitems  
+INNER JOIN  
+    products  ON orderitems.product_id = products.product_id 
+GROUP BY  
+    products.name; 
+------------------------------------------------------------
+Total amount spent by each user 
+
+SELECT  
+    users.name AS user_name, 
+    SUM(orders.total_amount) AS total_spent 
+FROM  
+    orders  
+INNER JOIN  
+    users  ON orders.user_id = users.user_id 
+GROUP BY  
+    users.name;
+---------------------------------------------------------------
+Number of orders placed per status 
+
+SELECT  
+    orders.status, 
+    COUNT(orders.order_id) AS total_orders 
+FROM  
+    orders  
+GROUP BY  
+    orders.status;
+--------------------------------------------------------------
