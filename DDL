@@ -1,0 +1,81 @@
+USERS TABLE
+CREATE TABLE Users ( 
+    user_id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(100), 
+    email VARCHAR(100) UNIQUE NOT NULL, 
+    password_hash VARCHAR(255) NOT NULL, 
+    phone_number VARCHAR(20), 
+    address TEXT, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);
+
+CATEGORIES TABLE 
+CREATE TABLE Categories ( 
+    category_id INT AUTO_INCREMENT PRIMARY KEY, 
+    category_name VARCHAR(100) NOT NULL 
+); 
+
+PRODUCTS TABLE 
+CREATE TABLE Products ( 
+    product_id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(100) NOT NULL, 
+    description TEXT, 
+    price DECIMAL(10, 2) NOT NULL, 
+    stock_quantity INT DEFAULT 0, 
+    category_id INT, 
+    FOREIGN KEY (category_id) REFERENCES Categories(category_id) 
+); 
+DESC Products;
+
+CART TABLE 
+CREATE TABLE Cart ( 
+    cart_id INT AUTO_INCREMENT PRIMARY KEY, 
+    user_id INT, 
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) 
+); 
+
+CARTITEMS TABLE 
+CREATE TABLE CartItems ( 
+    cart_item_id INT AUTO_INCREMENT PRIMARY KEY, 
+    cart_id INT, 
+    product_id INT, 
+    quantity INT NOT NULL, 
+    FOREIGN KEY (cart_id) REFERENCES Cart(cart_id), 
+    FOREIGN KEY (product_id) REFERENCES Products(product_id) 
+); 
+
+ORDERS TABLE 
+CREATE TABLE Orders ( 
+    order_id INT AUTO_INCREMENT PRIMARY KEY, 
+    user_id INT, 
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    status VARCHAR(50) DEFAULT 'pending', 
+    total_amount DECIMAL(10, 2), 
+    shipping_address TEXT, 
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) 
+); 
+DESC Orders; 
+
+ORDERITEMS TABLE 
+CREATE TABLE OrderItems ( 
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY, 
+    order_id INT, 
+    product_id INT, 
+    quantity INT NOT NULL, 
+    price_at_purchase DECIMAL(10, 2), 
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id), 
+    FOREIGN KEY (product_id) REFERENCES Products(product_id) 
+); 
+
+
+PAYMENTS TABLE 
+CREATE TABLE Payments ( 
+    payment_id INT AUTO_INCREMENT PRIMARY KEY, 
+    order_id INT, 
+    payment_method VARCHAR(50), 
+    payment_status VARCHAR(50) DEFAULT 'completed', 
+    amount_paid DECIMAL(10, 2), 
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id) 
+);
+
