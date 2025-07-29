@@ -1,0 +1,8 @@
+--Data Manipulation Language Sample
+
+-- Insert data into `users` 
+INSERT INTO `users` (`user_id`, `name`, `email`, `password_hash`, `phone_number`, `address`, `created_at`) VALUES 
+(1, 'Alice', 'alice@example.com', 'hashed_password_1', '1234567890', '123 Main St', NOW()), 
+(2, 'Bob', 'bob@example.com', 'hashed_password_2', '0987654321', '456 Elm St', NOW()), 
+(3, 'Charlie', 'charlie@example.com', 'hashed_password_3', '1122334455', '789 Oak St', NOW()), 
+(4, 'Diana', 'diana@example.com', 'hashed_password_4', '6677889900', '321 Pine St', NOW()); 
